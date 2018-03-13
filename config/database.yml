@@ -1,0 +1,17 @@
+development: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  charset: utf8mb4
+  database: pets_development
+  collation: utf8mb4_general_ci
+  reconnect: false
+  pool: 5
+  username: root
+  password:
+  socket: /var/lib/mysql/mysql.sock
+  host: db
+
+test:
+  <<: *default
+  host: <%= ENV["MYSQL_HOST"] || 'db' %>
+  database: pets_test

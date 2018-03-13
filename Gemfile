@@ -21,6 +21,10 @@ gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
+# WebAPI
+gem 'grape'
+gem 'grape-jbuilder'
+
 # curb
 gem 'curb'
 

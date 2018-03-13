@@ -104,7 +104,7 @@ gem 'asset_sync'
 gem 'unf'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
  gem 'unicorn'
@@ -175,6 +175,9 @@ group :development, :test do
   gem 'shoulda-matchers'
   ## validatorのspecを簡易化
   gem 'rspec-validator_spec_helper', '~> 1.0'
+
+  # json matcher
+  gem 'json_expressions', '~> 0.9.0'
 
   # 開発用mailer
   gem 'letter_opener_web', '~> 1.3', '>= 1.3.3'

@@ -5,7 +5,7 @@ module Users
       # GET /v1/users
       desc 'ユーザー一覧取得'
       get '/', jbuilder:'v1/users/index' do
-        # TBD
+        @users = User.page(params[:page])
       end
 
       # POST /v1/users
@@ -16,7 +16,7 @@ module Users
         requires :password, type: String, desc: 'パスワード'
         requires :password_confirmation, type: String, desc: 'パスワード確認用'
       end
-      post '/', jbuilder: 'v1/users/show' do
+      post '/', jbuilder: 'v1/users/me' do
         st_params = strong_params(params).permit(:email, :password, :password_confirmation, :name)
         @user = User.new(email: st_params[:email],
                  password: st_params[:password],

@@ -1,0 +1,18 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        id: ID
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワードの確認
+        address: アドレス
+        status: 状態
+        thx_balance: 残高
+    enum:
+      user:
+        status:
+          enabled: 利用中
+          disabled: 停止

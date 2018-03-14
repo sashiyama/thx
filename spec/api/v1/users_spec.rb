@@ -68,4 +68,41 @@ RSpec.describe Users::V1 do
       end
     end
   end
+
+  describe 'GET /v1/users/search ユーザー検索' do
+    let(:user){
+      create(:user,
+             email: 'example@example.com',
+             name: 'example',
+             password: 'ExamplePassword1234',
+             password_confirmation: 'ExamplePassword1234')
+    }
+    context '検索に合致する結果が存在する場合' do
+      it '検索に合致したユーザーが返る' do
+        pattern = {
+          users: [
+            {
+              name: user.name,
+              address: user.address,
+              verified: user.verified
+            }
+          ]
+        }
+        get '/v1/users/search?q=example'
+        expect(response.status).to eq 200
+        expect(response.body).to match_json_expression(pattern)
+      end
+    end
+
+    context '検索に合致する結果が存在しない場合' do
+      it '空のユーザー配列が返る' do
+        pattern = {
+          users: []
+        }
+        get '/v1/users/search?q=test'
+        expect(response.status).to eq 200
+        expect(response.body).to match_json_expression(pattern)
+      end
+    end
+  end
 end

@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313201037) do
+ActiveRecord::Schema.define(version: 20180314174835) do
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
+    t.string "name"
     t.string "address", null: false
     t.integer "thx_balance"
     t.string "status", default: "enable", null: false
+    t.boolean "verified", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["address"], name: "index_users_on_address", unique: true

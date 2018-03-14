@@ -12,14 +12,16 @@ module Users
       desc 'ユーザー登録'
       params do
         requires :email, type: String, desc: 'メールアドレス'
+        optional :name, type: String, desc: '名前'
         requires :password, type: String, desc: 'パスワード'
         requires :password_confirmation, type: String, desc: 'パスワード確認用'
       end
       post '/', jbuilder: 'v1/users/show' do
-        st_params = strong_params(params).permit(:email, :password, :password_confirmation)
+        st_params = strong_params(params).permit(:email, :password, :password_confirmation, :name)
         @user = User.new(email: st_params[:email],
                  password: st_params[:password],
                  password_confirmation: st_params[:password_confirmation],
+                 name: st_params[:name].presence,
                  address: SecureRandom.hex,
                  thx_balance: User::INIT_THX)
         @user.save!

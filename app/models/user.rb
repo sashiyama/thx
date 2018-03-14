@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validates_format_of :password, :with => /\A[ -~。-゜]*\z/,
                       :on => [:create, :update],
                       :message => "は半角で入力してください"
+  validates :name, length: { maximum: 100 }
   has_secure_password
 
   enum status: {

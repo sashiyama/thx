@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314174835) do
+ActiveRecord::Schema.define(version: 20180314190907) do
+
+  create_table "thx_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "thx_hash"
+    t.bigint "sender_id"
+    t.bigint "receiver_id"
+    t.integer "thx"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_thx_transactions_on_receiver_id"
+    t.index ["sender_id"], name: "index_thx_transactions_on_sender_id"
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "email", null: false
@@ -26,4 +38,6 @@ ActiveRecord::Schema.define(version: 20180314174835) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "thx_transactions", "users", column: "receiver_id"
+  add_foreign_key "thx_transactions", "users", column: "sender_id"
 end

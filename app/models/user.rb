@@ -3,6 +3,7 @@ class User < ApplicationRecord
            foreign_key: 'receiver_id'
   has_many :senders,  class_name:  'ThxTransaction',
            foreign_key: 'sender_id'
+  has_one :access_token, class_name: 'AccessToken', dependent: :destroy, inverse_of: :user
 
   before_save { self.email = email.downcase }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -21,8 +22,8 @@ class User < ApplicationRecord
   has_secure_password
 
   enum status: {
-    enabled: 'enable',
-    disabled: 'disable'
+    enable: 'enable',
+    disable: 'disable'
   }
 
   before_create do

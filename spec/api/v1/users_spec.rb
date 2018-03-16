@@ -3,6 +3,7 @@ require 'json_expressions/rspec'
 
 RSpec.describe Users::V1 do
   describe 'GET /v1/users ユーザー一覧' do
+    let(:signed_in_user){ create(:user, :sign_in) }
     let(:user){
       create(:user,
              email: 'example@example.com',
@@ -17,12 +18,32 @@ RSpec.describe Users::V1 do
             name: user.name,
             address: user.address,
             verified: user.verified
+          },
+          {
+            name: signed_in_user.name,
+            address: signed_in_user.address,
+            verified: signed_in_user.verified
           }
         ]
       }
-      get '/v1/users'
+      get '/v1/users', :headers => {'Authorization' => "Bearer #{signed_in_user.access_token.token}"}
       expect(response.status).to eq 200
       expect(response.body).to match_json_expression(pattern)
+    end
+
+    context 'アクセストークンの期限が切れている場合' do
+      it 'エラーメッセージが返る' do
+        signed_in_user
+        pattern = {
+          developerMessage: 'Invalid Access Token.',
+          userMessage: ''
+        }
+        travel((AccessToken::ACCESS_TOKEN_LIMIT_MIN.minutes + 1.minutes)) do
+          get '/v1/users', :headers => {'Authorization' => "Bearer #{signed_in_user.access_token.token}"}
+          expect(response.status).to eq 401
+          expect(response.body).to match_json_expression(pattern)
+        end
+      end
     end
   end
 
@@ -70,10 +91,11 @@ RSpec.describe Users::V1 do
   end
 
   describe 'GET /v1/users/search ユーザー検索' do
+    let(:signed_in_user){ create(:user, :sign_in) }
     let(:user){
       create(:user,
-             email: 'example@example.com',
-             name: 'example',
+             email: 'search@search.com',
+             name: 'search',
              password: 'ExamplePassword1234',
              password_confirmation: 'ExamplePassword1234')
     }
@@ -88,7 +110,7 @@ RSpec.describe Users::V1 do
             }
           ]
         }
-        get '/v1/users/search?q=example'
+        get '/v1/users/search?q=search', :headers => {'Authorization' => "Bearer #{signed_in_user.access_token.token}"}
         expect(response.status).to eq 200
         expect(response.body).to match_json_expression(pattern)
       end
@@ -99,7 +121,7 @@ RSpec.describe Users::V1 do
         pattern = {
           users: []
         }
-        get '/v1/users/search?q=test'
+        get '/v1/users/search?q=test', :headers => {'Authorization' => "Bearer #{signed_in_user.access_token.token}"}
         expect(response.status).to eq 200
         expect(response.body).to match_json_expression(pattern)
       end

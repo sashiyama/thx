@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314190907) do
+ActiveRecord::Schema.define(version: 20180316061746) do
+
+  create_table "access_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "user_id"
+    t.string "token"
+    t.string "refresh_token"
+    t.datetime "issued_at"
+    t.datetime "refresh_token_issued_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["refresh_token"], name: "index_access_tokens_on_refresh_token"
+    t.index ["token"], name: "index_access_tokens_on_token"
+    t.index ["user_id"], name: "index_access_tokens_on_user_id"
+  end
 
   create_table "thx_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "thx_hash"
@@ -38,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180314190907) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "access_tokens", "users"
   add_foreign_key "thx_transactions", "users", column: "receiver_id"
   add_foreign_key "thx_transactions", "users", column: "sender_id"
 end

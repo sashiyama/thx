@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318120933) do
+ActiveRecord::Schema.define(version: 20180318172250) do
 
   create_table "access_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20180318120933) do
     t.index ["refresh_token"], name: "index_access_tokens_on_refresh_token"
     t.index ["token"], name: "index_access_tokens_on_token"
     t.index ["user_id"], name: "index_access_tokens_on_user_id"
+  end
+
+  create_table "giving_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.date "giving_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "thx_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|

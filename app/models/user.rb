@@ -19,6 +19,8 @@ class User < ApplicationRecord
                       :on => [:create, :update],
                       :message => "は半角で入力してください"
   validates :name, length: { maximum: 100 }
+  validates :thx_balance, numericality: { greater_than_or_equal_to: 0, message: "が%{count}を下回っています" }
+  validates :received_thx, numericality: { greater_than_or_equal_to: 0 }
   has_secure_password
 
   enum status: {

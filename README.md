@@ -1,24 +1,8 @@
-# README
+# Thx
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This system is for Peer-To-Peer Bonus.
 
-Things you may want to cover:
+What this system can do is as below.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Employee Registration.
+* Send Thx each other. (Thx = bonus)

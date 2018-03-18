@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :thx_transaction do
-    thx_hash "MyString"
+    thx_hash { SecureRandom.hex }
     sender nil
     receiver nil
-    thx 1
-    comment "MyText"
+    thx { rand(1000) }
+    comment { ["いつもありがとうございます", "感謝します", "これからも宜しくお願いします", "Thank you!"].sample }
   end
 end

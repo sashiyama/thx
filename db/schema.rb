@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316061746) do
+ActiveRecord::Schema.define(version: 20180318120933) do
 
   create_table "access_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180316061746) do
     t.string "name"
     t.string "address", null: false
     t.integer "thx_balance"
+    t.integer "received_thx", default: 0
     t.string "status", default: "enable", null: false
     t.boolean "verified", default: false
     t.datetime "created_at", null: false

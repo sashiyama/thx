@@ -77,6 +77,13 @@ module Users
                    enable_user.where('email LIKE(?) OR name LIKE(?)', "%#{st_params[:q]}%", "%#{st_params[:q]}%").page(params[:page])
                  end
       end
+
+      desc '自分の情報を取得'
+      get 'me', jbuilder: 'v1/users/me' do
+        @user = current_user
+      end
+
+      mount Thxes::V1
     end
   end
 end

@@ -35,6 +35,7 @@ module Thxes
           current_user.update!(thx_balance: (current_user.thx_balance - st_params[:thx]))
           receiver.update!(received_thx: (receiver.received_thx + st_params[:thx]))
           @thx_transaction.save!
+          send_time_line(@thx_transaction)
         end
       end
 

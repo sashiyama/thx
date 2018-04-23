@@ -1,5 +1,7 @@
 module Root
   class V1 < Grape::API
+    helpers SlackApp
+
     # ex) http://api.localhost.local:3000/v1
     version 'v1', :using => :path
     helpers do

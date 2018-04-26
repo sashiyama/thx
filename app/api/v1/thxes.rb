@@ -19,6 +19,7 @@ module Thxes
 
       # POST /v1/users/thxes
       desc 'thxの送信'
+      # slack slash command用
       params do
         requires :token, type: String, desc: 'トークン'
         requires :team_id, type: String, desc: ''
@@ -49,7 +50,7 @@ module Thxes
           sender.update!(thx_balance: (sender.thx_balance - thx))
           receiver.update!(received_thx: (receiver.received_thx + thx))
           @thx_transaction.save!
-          # timeline @thx_transaction
+          send_slack(@thx_transaction)
         end
       end
       # post '/', jbuilder: 'v1/thx/transaction' do

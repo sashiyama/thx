@@ -14,13 +14,13 @@
 
     def send_slack(comment)
       notifier = Slack::Notifier.new("https://hooks.slack.com/services/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")
-      payload = attachments(thxes)
+      payload = attachments(comment)
       notifier.ping(payload)
     end
 
     def attachments(comment)
       {
-          "text": "It's 80 degrees right now.",
+          "text": "new thx",
           "attachments": [
               {
                   "text":"#{comment}"

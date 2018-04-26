@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one :user
   has_many :receivers,  class_name:  'ThxTransaction',
            foreign_key: 'receiver_id'
   has_many :senders,  class_name:  'ThxTransaction',

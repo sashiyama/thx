@@ -157,6 +157,8 @@ gem 'webpacker', '~> 3.2', '>= 3.2.2'
 
 gem 'listen'
 
+gem 'pg'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'

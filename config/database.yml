@@ -1,15 +1,15 @@
-development: &default
-  adapter: mysql2
-  encoding: utf8mb4
-  charset: utf8mb4
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch('DATABASE_HOST') { 'localhost' } %>
+  port: <%= ENV.fetch('DATABASE_PORT') { 5432 } %>
+  username: <%= ENV.fetch('DATABASE_USER') { 'root' } %>
+  password: <%= ENV.fetch('DATABASE_PASSWORD') { '' } %>
+
+development:
+  <<: *default
   database: thx_development
-  collation: utf8mb4_general_ci
-  reconnect: false
-  pool: 5
-  username: root
-  password:
-  socket: /var/lib/mysql/mysql.sock
-  host: db
 
 test:
   <<: *default

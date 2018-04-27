@@ -1,8 +1,23 @@
   module SlackHelper
 
+    require 'slack'
+
+    def error_msg(user_id, channel_id)
+      Slack.configure do |config|
+        config.token = ENV['WORK_SPACE_TOKEN']
+      end
+
+      Slack.chat_postEphemeral(
+        channel: channel_id,
+        text: "thxを送れませんでした。以下のフォーマットで入力してください。\n\n/thx    @送り先ユーザー名    thxポイント(数字)   メッセージ",
+        icon_emoji: ':exclamation:',
+        user: user_id
+      )
+    end
+
     def params_parser(st_params)
       # receiver_nameはreceiverのslack上でのユーザー名
-      receiver_name, thx, comment = st_params[:text].match(/@(?<receiver_name>.+)\s(?<thx>.+)\s(?<comment>.+)/).captures
+      receiver_name, thx, comment = st_params[:text].match(/\A@(?<receiver_name>.+)\s(?<thx>\d+)\s(?<comment>.+)\z/).captures
 
       send_slack(comment)
 
@@ -10,6 +25,8 @@
       receiver = SlackUser.find_by(user_name: receiver_name).user
 
       [sender, receiver, thx.to_i, comment]
+    rescue => ex
+      error_msg(st_params[:user_id], st_params[:channel_id])
     end
 
     def send_slack(comment)

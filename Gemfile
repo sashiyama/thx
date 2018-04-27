@@ -152,6 +152,7 @@ gem 'rails-erd', '~> 1.5', '>= 1.5.2'
 
 # slack通知
 gem 'slack-notifier', '~> 2.3', '>= 2.3.2'
+gem 'slack-api'
 
 gem 'webpacker', '~> 3.2', '>= 3.2.2'
 

@@ -50,7 +50,8 @@ module Thxes
           sender.update!(thx_balance: (sender.thx_balance - thx))
           receiver.update!(received_thx: (receiver.received_thx + thx))
           @thx_transaction.save!
-          send_slack(@thx_transaction)
+          time_line_msg(sender, receiver, thx, comment)
+          success_msg(st_params[:user_id],  st_params[:channel_id])
         end
       end
       # post '/', jbuilder: 'v1/thx/transaction' do

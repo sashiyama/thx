@@ -5,9 +5,12 @@ module Thxes
       # GET /v1/users/thxes
       desc '現状のthx情報取得'
       get '/' do
+        # {
+        #    thx_balance: current_user.thx_balance,
+        #   received_thx: current_user.received_thx,
+        # }
         {
-          thx_balance: current_user.thx_balance,
-          received_thx: current_user.received_thx
+         text: "現在のthxは 所持:#{1000}、受領:#{100} です。",
         }
       end
 

@@ -68,7 +68,6 @@
     end
 
     def params_parser(st_params)
-      binding.pry
       # display_nameはreceiverのslackユーザーの表示名
       display_name, thx, comment = st_params[:text].match(/\A@(?<display_name>.+)\s(?<thx>\d+)\s(?<comment>.+)\z/).captures
       slack_user_id              = st_params[:user_id]

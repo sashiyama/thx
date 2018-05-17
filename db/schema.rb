@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318172250) do
+ActiveRecord::Schema.define(version: 20180517083548) do
 
   create_table "access_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20180318172250) do
     t.integer "received_thx", default: 0
     t.string "status", default: "enable", null: false
     t.boolean "verified", default: false
+    t.string "slack_user_id"
+    t.string "slack_team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["address"], name: "index_users_on_address", unique: true

@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   before_save { self.email = email.downcase }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, length: { maximum: 255 }, presence: true,
+  validates :email, length: { maximum: 255 },
             format: { with: VALID_EMAIL_REGEX }
   validates_format_of :password, :with => /\A.*[a-zA-Z]+.*\z/,
                       :allow_blank => true, :on => [:create, :update],
@@ -37,4 +37,6 @@ class User < ApplicationRecord
 
   # 初回登録時自動付与thx
   INIT_THX = 1000
+
+  SLACK_USER_DUMMY_PASSWORD = 'FK21yOAp'
 end

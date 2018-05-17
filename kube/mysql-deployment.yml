@@ -42,14 +42,23 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: mysql_password
+          args:
+            - "--character-set-server=utf8"
+            - "--collation-server=utf8_unicode_ci"
           ports:
             - containerPort: 3306
               name: mysql
           volumeMounts:
             - name: mysql-db-data
               mountPath: "/var/lib/mysql"
+            - name: mysql-config
+              mountPath: /etc/mysql/my.cnf
+              subPath: my.cnf
       volumes:
         - name: mysql-db-data
           gcePersistentDisk:
             pdName: db-data
             fsType: ext4
+        - name: mysql-config
+          configMap:
+            name: mysql-config

@@ -72,6 +72,12 @@ module Endpoint
       end
     end
 
+    # GET /_health
+    desc 'ヘルスチェック'
+    get '/_health' do
+      "Still Alive"
+    end
+
     mount Root::V1
   end
 end

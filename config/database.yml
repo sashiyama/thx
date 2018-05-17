@@ -15,3 +15,10 @@ test:
   <<: *default
   host: <%= ENV["MYSQL_HOST"] || 'db' %>
   database: thx_test
+
+production:
+  <<: *default
+  host: mysql
+  database: <%= ENV['MYSQL_DATABASE'] %>
+  username: <%= ENV['MYSQL_USER'] %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>

@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: web
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
+      containers:
+        - name: web
+          image: asia.gcr.io/techperk-201607/thx_app_prod:1.0.8
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /_health
+              port: 3000
+            initialDelaySeconds: 120
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /_health
+              port: 3000
+            initialDelaySeconds: 120
+            timeoutSeconds: 1
+          env:
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: secret_key_base
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: mysql_database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: mysql_user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: mysql_password

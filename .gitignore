@@ -37,3 +37,6 @@ yarn-debug.log*
 # mysqlデータ永続化用ディレクトリ
 /mysql/data/*
 !.gitkeep
+
+# kube secrets
+kube/app-secrets.yml

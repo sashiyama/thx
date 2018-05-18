@@ -24,12 +24,14 @@ spec:
               port: 3000
             initialDelaySeconds: 120
             timeoutSeconds: 1
+            periodSeconds: 60
           readinessProbe:
             httpGet:
               path: /_health
               port: 3000
             initialDelaySeconds: 120
             timeoutSeconds: 1
+            periodSeconds: 60
           env:
             - name: SECRET_KEY_BASE
               valueFrom:

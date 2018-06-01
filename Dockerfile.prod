@@ -1,0 +1,50 @@
+FROM phusion/passenger-ruby23
+# set some rails env vars
+ENV RAILS_ENV production
+ENV BUNDLE_PATH /bundle
+# set the app directory var
+ENV APP_HOME /home/app
+WORKDIR $APP_HOME
+# Enable nginx/passenger
+RUN rm -f /etc/service/nginx/down
+# Disable SSH
+# Some discussion on this: https://news.ycombinator.com/item?id=7950326
+RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
+RUN apt-get update -qq
+# Install apt dependencies
+RUN apt-get install -y --no-install-recommends \
+  npm \
+  build-essential \
+  curl libssl-dev \
+  git \
+  unzip \
+  zlib1g-dev \
+  libxslt-dev \
+  mysql-client \
+  sqlite3
+# install bundlerc
+RUN gem install bundler
+# Separate task from `add . .` as it will be
+# Skipped if gemfile.lock hasn't changed
+COPY Gemfile* ./
+# Install gems to /bundle
+RUN bundle install
+# place the nginx / passenger config
+RUN rm /etc/nginx/sites-enabled/default
+ADD nginx/env.conf /etc/nginx/main.d/env.conf
+ADD nginx/app.conf /etc/nginx/sites-enabled/app.conf
+RUN npm cache clean && \
+    npm install n -g && \
+    n stable && \
+    ln -sf /usr/local/bin/node /usr/bin/node && \
+    apt-get purge -y nodejs npm
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn
+COPY package.json* ./
+COPY yarn.lock* ./
+RUN mkdir log && touch log/$RAILS_ENV.log
+RUN chown -R app:app $APP_HOME
+ADD . .
+EXPOSE 3000
+CMD ["/sbin/my_init"]

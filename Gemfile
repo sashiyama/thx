@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+#gem 'therubyracer', platforms: :ruby
 
 # WebAPI
 gem 'grape'
@@ -27,9 +27,6 @@ gem 'grape-jbuilder'
 
 # curb
 gem 'curb'
-
-# メモリ管理
-gem 'unicorn-worker-killer'
 
 # error tracking
 gem 'airbrake'
@@ -91,15 +88,6 @@ gem 'sidekiq-middleware'
 # sidekiq/web用
 gem 'sinatra', '~> 2.0', '>= 2.0.1', require: nil
 
-# for carrierwave s3
-gem 'fog'
-
-# AWS操作
-gem 'aws-sdk', '~> 3.0', '>= 3.0.1'
-gem 'aws-sdk-rails', '~> 2.0', '>= 2.0.1'
-
-gem 'asset_sync'
-
 # unicode正規化
 gem 'unf'
 
@@ -131,9 +119,6 @@ gem "sitemap_generator"
 # バルクインサート(アップデート)
 gem 'activerecord-import', '~> 0.22.0'
 
-# for turbolinks-escape
-#gem 'jquery-turbolinks'
-
 # data作成
 gem 'factory_bot_rails', '~> 4.8', '>= 4.8.2'
 
@@ -156,6 +141,9 @@ gem 'slack-notifier', '~> 2.3', '>= 2.3.2'
 gem 'webpacker', '~> 3.2', '>= 3.2.2'
 
 gem 'listen'
+
+gem 'pkg-config'
+gem 'tzinfo-data'
 
 group :development, :test do
   gem 'pry-rails'

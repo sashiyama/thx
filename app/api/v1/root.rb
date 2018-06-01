@@ -43,6 +43,7 @@ module Root
     end
     namespace do
       mount Users::V1
+      mount Slacks::V1
     end
   end
 end

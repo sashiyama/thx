@@ -17,6 +17,22 @@ module Slacks
           }
         end
 
+        # POST /v1/slacks/thxes/comments
+        desc 'コメントの確認'
+        params do
+          requires :team_id, type: String, desc: 'チームID'
+          requires :user_id, type: String, desc: 'ユーザID'
+        end
+        post 'comments' do
+          st_params = strong_params(params).permit(:team_id, :user_id)
+          puts st_params
+          user = User.find_by!(slack_user_id: st_params[:user_id], slack_team_id: st_params[:team_id])
+          comments = ThxTransaction.where(receiver_id: user).pluck(:comment)
+          {
+            text: comments
+          }
+        end
+
         # POST /v1/slack/thxes/send
         desc 'ポイントの送信'
         params do
